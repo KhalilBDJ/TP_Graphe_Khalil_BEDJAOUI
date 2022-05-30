@@ -1,7 +1,6 @@
-import org.jetbrains.annotations.NotNull;
-
-import java.io.*;
-import java.sql.SQLOutput;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -206,6 +205,30 @@ public class Listes {
 
         }
         writer.close();
+    }
+
+    public void Erdos(int s, double p){
+        Create_Graphe(s);
+        n = s;
+        if (p == 0){
+            return;
+        }
+        int sum = (s*(s-1))/2;
+        int l = (int) Math.floor(sum*p);
+        System.out.println(l);
+        for (int i = 0; i<l;i++){
+            int a = sommets.get((int)(Math.random()*sommets.size()));
+            int b = sommets.get((int)(Math.random()*sommets.size()));
+            if (a == b ){
+                i--;
+            } else if ((connexions.get(a-1).contains(a) && connexions.get(a-1).contains(b)) || (connexions.get(b-1).contains(a) && connexions.get(b-1).contains(b))) {
+                i--;
+            }
+            else{
+                Create_Liason(a,b);
+            }
+        }
+
     }
 
     public int getN() {
