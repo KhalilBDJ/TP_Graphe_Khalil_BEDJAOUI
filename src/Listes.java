@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SplittableRandom;
 
 public class Listes {
 
@@ -209,12 +210,19 @@ public class Listes {
 
     public void Erdos(int s, double p){
         Create_Graphe(s);
+        int l = 0;
         n = s;
         if (p == 0){
             return;
         }
         int sum = (s*(s-1))/2;
-        int l = (int) Math.floor(sum*p);
+        SplittableRandom random = new SplittableRandom();
+        for (int i = 0; i<sum; i++){
+            if(random.nextFloat(0,1)<= p){
+                l++;
+            }
+        }
+
         System.out.println(l);
         for (int i = 0; i<l;i++){
             int a = sommets.get((int)(Math.random()*sommets.size()));

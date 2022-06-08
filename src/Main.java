@@ -22,7 +22,7 @@ public class Main {
         listes.Create_Liason(4,7);*/
         //listes.Erdos(5, 1);
         //listes.Erdos(5, 0);
-        //listes.Erdos(5, 0.2);
+        listes.Erdos(5, 0.7);
         //listes.Erdos(17, 0.2);
 
         System.out.println("");
