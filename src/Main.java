@@ -6,8 +6,8 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        /*Listes listes = new Listes("orienté", 7, 0, new ArrayList<>());
-        listes.Create_Graphe(listes.getN());
+        Listes listes = new Listes("orienté", 7, 0, new ArrayList<>());
+        /*listes.Create_Graphe(listes.getN());
         listes.Create_Liason(2,3);
         listes.Create_Liason(3,5);
         listes.Create_Liason(0,1);
@@ -26,21 +26,25 @@ public class Main {
         System.out.println("");
         listes.afficheGraphe();
         listes.txtCreator("graphe.txt");*/
+        listes.Erdos(8, 0.7);
+        listes.afficheGraphe();
+        listes.Inverse();
+
 
 
         // TP 2
 
-        Matrice matrice = new Matrice("non orienté", 0, 0, new ArrayList<>());
-        matrice.createGraphFromText("mots.txt");
+        //Matrice matrice = new Matrice("non orienté", 0, 0, new ArrayList<>());
+        //matrice.createGraphFromText("mots.txt");
         //matrice.createLiaison("2","3");
         //matrice.createLiaison("1", "4");
         //matrice.isAdjacent("2","3");
         //matrice.isAdjacent("2","4");
         //matrice.deleteLiaison(2,3);
         //matrice.addSommet("5");
-        matrice.parcoursLargeur("VLAN");
-        matrice.findParcours("VLAN","PLAT");
-        matrice.afficheGraph();
+        //matrice.parcoursLargeur("VLAN");
+        //matrice.findParcours("VLAN","PLAT");
+        //matrice.afficheGraph();
         //matrice.txtCreator("graphe.txt");
     }
 }

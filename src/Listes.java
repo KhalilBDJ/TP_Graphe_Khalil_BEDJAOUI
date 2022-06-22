@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.SplittableRandom;
 
@@ -39,7 +40,7 @@ public class Listes {
             if (line.get(0) == a) {
                 if (sommets.contains(b)){
                     line.add(b);
-                    m = m+1;
+
                 }
                 else {
                     System.out.println("le sommet " +b+ " n'existe pas");
@@ -54,6 +55,7 @@ public class Listes {
         }
         if (sommets.contains(a) && sommets.contains(b))
         {
+            m = m+1;
             System.out.println("nouvelle liaison ajoutée : ("+ a + ", "+ b +") \n" + connexions );
             System.out.println("Le graphe possède maintenant "+ m + " arrêtes.");
         }
@@ -87,7 +89,7 @@ public class Listes {
         if (!sommets.contains(b)){
             System.out.println("le sommet "+b+" n'existe pas");
         }
-        m = m - 1;
+
         System.out.println("liaison supprimée : ("+ a + ", "+ b +") \n" + connexions );
         return connexions;
     }
@@ -236,7 +238,25 @@ public class Listes {
                 Create_Liason(a,b);
             }
         }
+    }
 
+    public void Inverse(){
+        int sommet = 0;
+        HashMap<Integer, Integer> liaisons = new HashMap<Integer, Integer>();
+        for (List<Integer> connexion:connexions) {
+            List<Integer> connexionBis = new ArrayList<>(connexion);
+            sommet = connexionBis.get(0);
+            connexionBis.remove(0);
+            for (int sommetBis:connexionBis) {
+                if (!liaisons.get(sommetBis).equals(sommet) || liaisons.get(sommetBis).equals(null)){
+                    Remove_Liaison(sommet, sommetBis);
+                    Create_Liason(sommetBis, sommet);
+                    liaisons.put(sommet,sommetBis);
+                }
+
+            }
+        }
+        System.out.println(connexions);
     }
 
     public int getN() {
