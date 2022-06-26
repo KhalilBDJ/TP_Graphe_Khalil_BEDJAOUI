@@ -26,16 +26,20 @@ public class Main {
         System.out.println("");
         listes.afficheGraphe();
         listes.txtCreator("graphe.txt");*/
-        listes.Erdos(8, 0.7);
-        listes.afficheGraphe();
-        listes.Inverse();
+        //listes.Erdos(8, 0.7);
+        //listes.afficheGraphe();
+        //listes.Inverse();
 
 
 
         // TP 2
 
-        //Matrice matrice = new Matrice("non orienté", 0, 0, new ArrayList<>());
+        Matrice matrice = new Matrice("orienté", 0, 0, new ArrayList<>());
         //matrice.createGraphFromText("mots.txt");
+
+        matrice.createGraphFromTextBis("test.txt");
+        matrice.adjacents("X");
+        //System.out.println(matrice.matrice);
         //matrice.createLiaison("2","3");
         //matrice.createLiaison("1", "4");
         //matrice.isAdjacent("2","3");

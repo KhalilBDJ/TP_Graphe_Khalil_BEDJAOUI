@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -191,7 +192,8 @@ public class Matrice {
                 }
             }
         }
-
+        matrice.get(0).set(0,5);
+        System.out.println(matrice);
         return matrice;
     }
 
@@ -248,4 +250,85 @@ public class Matrice {
         System.out.println(parcours);
         return parcours;
     }
+
+    public List<List<Integer>> createGraphFromTextBis(String fileName) throws FileNotFoundException {
+        File file = new File(fileName);
+        Scanner scanner = new Scanner(file);
+        List<String> rules = new ArrayList<>();
+        while (scanner.hasNextLine()){
+            String strline = scanner.nextLine();
+            if (Pattern.matches("[0-9]", strline)){
+                n = Integer.parseInt(strline);
+            }
+            else {
+                rules.add(strline);
+                List<String> letters = List.of(strline.split(""));
+                for (String letter: letters) {
+                    if (!sommets.contains(letter)){
+                        sommets.add(letter);
+                    }
+                }
+            }
+        }
+        for (String s: sommets) {
+            List<Integer> vide = new ArrayList<>();
+            for (int i = 0; i<4; i++){
+                vide.add(0);
+            }
+            matrice.add(vide);
+        }
+        List<String> trahsCan = new ArrayList<>();
+        for (String rule:rules) {
+            List<String> separatedRule = List.of(rule.split(""));
+            List<String> baseWord = new ArrayList<>(separatedRule);
+            baseWord.remove(baseWord.size()-1);
+            System.out.println(rule + " oi");
+            if (!trahsCan.contains(rule)){
+                for (String ruleBis: rules) {
+                    System.out.println(ruleBis);
+                    List<String> separatedRuleBis = List.of(ruleBis.split(""));
+                    List<String> baseWordBis = new ArrayList<>(separatedRuleBis);
+                    baseWordBis.remove(baseWordBis.size()-1);
+                    int b = separatedRuleBis.size()-1;
+                    int a = separatedRule.size()-1;
+                    if (baseWord.equals(baseWordBis) && !separatedRule.get(a).equals(separatedRuleBis.get(b)) ){
+                        createLiaison(separatedRule.get(a), separatedRuleBis.get(b));
+                        trahsCan.add(ruleBis);
+                    }
+                }
+            }
+            System.out.println(trahsCan);
+        }
+        System.out.println(sommets);
+        System.out.println(matrice);
+        for (String s:sommets) {
+            adjacents(s);
+        }
+        System.out.println(matrice);
+        return matrice;
+    }
+
+    public void adjacents(String sommet){
+        boolean condition = true;
+        List<String> adj = new ArrayList<>();
+        String s = sommet;
+        while (condition){
+            int i = 0;
+            for (String sommetBis: sommets) {
+                i++;
+                if (isAdjacent(s, sommetBis)){
+                    s = sommetBis;
+                    adj.add(s);
+                    createLiaison(sommet, sommetBis);
+                    i--;
+                }
+                if (i == sommets.size()){
+                    condition =false;
+                }
+            }
+
+        }
+    }
+
+
 }

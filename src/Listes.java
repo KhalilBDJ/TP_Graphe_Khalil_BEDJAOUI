@@ -2,7 +2,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.SplittableRandom;
 
@@ -238,25 +237,24 @@ public class Listes {
                 Create_Liason(a,b);
             }
         }
+        System.out.println();
     }
 
     public void Inverse(){
         int sommet = 0;
-        HashMap<Integer, Integer> liaisons = new HashMap<Integer, Integer>();
+        List<Liaison> liaisons = new ArrayList<>();
         for (List<Integer> connexion:connexions) {
             List<Integer> connexionBis = new ArrayList<>(connexion);
             sommet = connexionBis.get(0);
             connexionBis.remove(0);
             for (int sommetBis:connexionBis) {
-                if (!liaisons.get(sommetBis).equals(sommet) || liaisons.get(sommetBis).equals(null)){
+                if (!liaisons.contains((new Liaison(sommetBis, sommet)))){
                     Remove_Liaison(sommet, sommetBis);
                     Create_Liason(sommetBis, sommet);
-                    liaisons.put(sommet,sommetBis);
+                    liaisons.add(new Liaison(sommet, sommetBis));
                 }
-
             }
         }
-        System.out.println(connexions);
     }
 
     public int getN() {
@@ -267,3 +265,4 @@ public class Listes {
         this.n = n;
     }
 }
+
