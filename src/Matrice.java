@@ -2,10 +2,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.regex.Pattern;
 
 public class Matrice {
@@ -282,10 +279,8 @@ public class Matrice {
             List<String> separatedRule = List.of(rule.split(""));
             List<String> baseWord = new ArrayList<>(separatedRule);
             baseWord.remove(baseWord.size()-1);
-            System.out.println(rule + " oi");
             if (!trahsCan.contains(rule)){
                 for (String ruleBis: rules) {
-                    System.out.println(ruleBis);
                     List<String> separatedRuleBis = List.of(ruleBis.split(""));
                     List<String> baseWordBis = new ArrayList<>(separatedRuleBis);
                     baseWordBis.remove(baseWordBis.size()-1);
@@ -297,18 +292,22 @@ public class Matrice {
                     }
                 }
             }
-            System.out.println(trahsCan);
-        }
+       }
         System.out.println(sommets);
         System.out.println(matrice);
         for (String s:sommets) {
             adjacents(s);
+            for (String sPrime: sommets) {
+                if ((adjacents(s).isEmpty() && !adjacentsBis(s).isEmpty()) && (adjacents(sPrime).isEmpty() && adjacentsBis(sPrime).isEmpty())){
+                    createLiaison(s, sPrime);
+                }
+            }
         }
         System.out.println(matrice);
         return matrice;
     }
 
-    public void adjacents(String sommet){
+    public List<String> adjacents(String sommet){
         boolean condition = true;
         List<String> adj = new ArrayList<>();
         String s = sommet;
@@ -326,9 +325,64 @@ public class Matrice {
                     condition =false;
                 }
             }
+        }
+        return adj;
+    }
+    public List<String> adjacentsBis(String sommet){
+        boolean condition = true;
+        List<String> adj = new ArrayList<>();
+        String s = sommet;
+        while (condition){
+            int i = 0;
+            for (String sommetBis: sommets) {
+                i++;
+                if (isAdjacent(sommetBis, s) && adjacents(s).isEmpty()){
+                    s = sommetBis;
+                    adj.add(s);
+                    i--;
+                }
+                if (i == sommets.size()){
+                    condition =false;
+                }
+            }
+        }
+        return adj;
+    }
+
+    public List<String> after(String s){
+        List<String> sommetsBefore=new ArrayList<>();
+        int i = sommets.indexOf(s);
+        int j = 0;
+        for (Integer sommet: matrice.get(i)) {
+
+            if (sommet == 1){
+                sommetsBefore.add(sommets.get(j));
+            }
+            j++;
+        }
+        System.out.println(sommetsBefore);
+        return sommetsBefore;
+    }
+
+    public List<String> parcoursProfondeur(){
+        HashMap<String, Integer> position = new HashMap<>();
+        List<String> sequence = new ArrayList<>();
+        int i = n-1;
+        for (String sommet: sommets) {
+            position.put(sommet, after(sommet).size());
 
         }
+        while (i>0){
+            for (String sommet: sommets) {
+                if (position.get(sommet) == i){
+                    sequence.add(sommet);
+                    i--;
+                }
+            }
+        }
+        return sequence;
     }
+
 
 
 }

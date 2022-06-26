@@ -38,7 +38,8 @@ public class Main {
         //matrice.createGraphFromText("mots.txt");
 
         matrice.createGraphFromTextBis("test.txt");
-        matrice.adjacents("X");
+        matrice.after("W");
+        matrice.parcoursProfondeur();
         //System.out.println(matrice.matrice);
         //matrice.createLiaison("2","3");
         //matrice.createLiaison("1", "4");
